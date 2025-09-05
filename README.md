@@ -7,15 +7,20 @@
 
 **🚨 QUACK ALERT: This app is exclusively for Apple/Mac computers! 🚨**
 
-A delightfully ridiculous macOS-only application to quickly respond to text spam using rubber duck themed responses through the Messages app. Sorry Windows users - even our ducks are picky about their ecosystem! 🦆
+A delightfully ridiculous macOS-only application to quickly respond to text spam using  
+rubber duck themed responses through the Messages app. Sorry Windows users - even  
+our ducks are picky about their ecosystem! 🦆
 
-> **Why Mac Only?** Our rubber ducks have developed a sophisticated taste for AppleScript and refuse to work with anything else. They're basically the tech snobs of the bathtub world. 🛁✨
+> **Why Mac Only?** Our rubber ducks have developed a sophisticated taste for AppleScript  
+and refuse to work with anything else. They're basically the tech snobs of the bathtub world. 🛁✨
 
 ## ✨ Features
 
-- **🦆 Rubber Duck Response Collection**: Over 20 hilarious rubber duck themed responses from dramatic cult recruitment to political duck conspiracies!
+- **🦆 Rubber Duck Response Collection**: Over 20 hilarious rubber duck themed responses  
+  from dramatic cult recruitment to political duck conspiracies!
 - **📱 Smart Phone Input**: Accepts any phone number format - (123) 456-7890, +1234567890, 123-456-7890, etc.
-- **🎲 Random Duck Image Sender**: Send random rubber duck photos with funny messages like "QUACK ATTACK!" and "Duck invasion continues..."
+- **🎲 Random Duck Image Sender**: Send random rubber duck photos with funny messages  
+  like "QUACK ATTACK!" and "Duck invasion continues..."
 - **Custom Response Management**: Add, edit, and delete your own response templates
 - **Quick Send**: Select a template and send with one click
 - **Messages App Integration**: Uses AppleScript to send messages through the native Messages app
@@ -25,7 +30,8 @@ A delightfully ridiculous macOS-only application to quickly respond to text spam
 ## 🚀 Quick Start
 
 ### Requirements
-- **🍎 macOS REQUIRED** (any recent version) - Sorry Windows/Linux folks, our ducks are Apple snobs! 🦆
+- **🍎 macOS REQUIRED** (any recent version) - Sorry Windows/Linux folks,  
+  our ducks are Apple snobs! 🦆
 - Python 3.6 or later (usually pre-installed on macOS)
 - Messages app (built into macOS)
 - **NOT compatible with Windows or Linux** - Our rubber ducks only speak AppleScript! 🦆🍎
