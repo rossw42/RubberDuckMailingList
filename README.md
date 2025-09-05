@@ -1,6 +1,25 @@
-# 📱 Spam Response Assistant
+██████╗ ██╗   ██╗██████╗ ██████╗ ███████╗██████╗     ██████╗ ██╗   ██╗ ██████╗██╗  ██╗
+██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔════╝██╔══██╗    ██╔══██╗██║   ██║██╔════╝██║ ██╔╝
+██████╔╝██║   ██║██████╔╝██████╔╝█████╗  ██████╔╝    ██║  ██║██║   ██║██║     █████╔╝ 
+██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔══╝  ██╔══██╗    ██║  ██║██║   ██║██║     ██╔═██╗ 
+██║  ██║╚██████╔╝██████╔╝██████╔╝███████╗██║  ██║    ██████╔╝╚██████╔╝╚██████╗██║  ██╗
+╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝
 
-A simple macOS application to quickly respond to text spam using predefined templates through the Messages app.
+███╗   ███╗ █████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗     ██╗     ██╗███████╗████████╗
+████╗ ████║██╔══██╗██║██║     ██║████╗  ██║██╔════╝     ██║     ██║██╔════╝╚══██╔══╝
+██╔████╔██║███████║██║██║     ██║██╔██╗ ██║██║  ███╗    ██║     ██║███████╗   ██║   
+██║╚██╔╝██║██╔══██║██║██║     ██║██║╚██╗██║██║   ██║    ██║     ██║╚════██║   ██║   
+██║ ╚═╝ ██║██║  ██║██║███████╗██║██║ ╚████║╚██████╔╝    ███████╗██║███████║   ██║   
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚══════╝╚═╝╚══════╝   ╚═╝   
+```
+
+# 🦆 Spam Response Assistant (Mac Only! 🍎)
+
+**🚨 QUACK ALERT: This app is exclusively for Apple/Mac computers! 🚨**
+
+A delightfully ridiculous macOS-only application to quickly respond to text spam using rubber duck themed responses through the Messages app. Sorry Windows users - even our ducks are picky about their ecosystem! 🦆
+
+> **Why Mac Only?** Our rubber ducks have developed a sophisticated taste for AppleScript and refuse to work with anything else. They're basically the tech snobs of the bathtub world. 🛁✨
 
 ## ✨ Features
 
@@ -16,16 +35,17 @@ A simple macOS application to quickly respond to text spam using predefined temp
 ## 🚀 Quick Start
 
 ### Requirements
-- macOS (any recent version)
+- **🍎 macOS REQUIRED** (any recent version) - Sorry Windows/Linux folks, our ducks are Apple snobs! 🦆
 - Python 3.6 or later (usually pre-installed on macOS)
 - Messages app (built into macOS)
+- **NOT compatible with Windows or Linux** - Our rubber ducks only speak AppleScript! 🦆🍎
 
 ### Installation
 
 1. **Download the app files** to a folder on your Mac
 2. **Open Terminal** and navigate to the app folder:
    ```bash
-   cd /path/to/spam_response_app
+   cd /path/to/RubberDuckMailingList
    ```
 3. **Install Messages integration** (RECOMMENDED):
    ```bash
@@ -226,11 +246,14 @@ rm spam_responses.json
 
 ### File Structure
 ```
-spam_response_app/
-├── main.py              # Main application code
-├── run_app.py           # Startup script
-├── README.md            # This documentation
-└── spam_responses.json  # Your saved responses (created automatically)
+RubberDuckMailingList/
+├── main.py                  # Main application code
+├── run_app.py               # Startup script
+├── install_messages_service.py # Messages integration installer
+├── quick_spam_response.py   # Quick response utility
+├── README.md                # This documentation
+├── .gitignore               # Git ignore rules
+└── spam_responses.json      # Your saved responses (created automatically)
 ```
 
 ### AppleScript Commands
@@ -294,4 +317,5 @@ This is a simple tool that can be extended:
 
 ---
 
-**Made for Mac users tired of spam texts! 🚫📱**
+**Made exclusively for Mac users tired of spam texts! 🍎🦆🚫📱**
+*PC users: Our ducks suggest switching to Mac for the full quacking experience!* 🦆✨
