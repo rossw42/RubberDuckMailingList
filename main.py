@@ -380,70 +380,120 @@ class SpamResponseApp:
         if result.returncode != 0:
             raise Exception(f"AppleScript error: {result.stderr}")
     
-    def send_remote_duck_image(self, phone_number: str):
-        """Send rubber duck image from remote URLs"""
+    def send_random_duck_message(self, phone_number: str):
+        """Send a variety of duck-themed messages instead of images"""
+        # Different duck messages for variety
+        duck_messages = [
+            "🦆🦆🦆 QUACK ATTACK! 🦆🦆🦆",
+            "🐥 RUBBER DUCK DEBUGGING SESSION ACTIVATED 🐥",
+            "🦆 *SQUEAKS LOUDLY* 🦆",
+            "🛁🦆 Bath time duck reporting for duty! 🦆🛁",
+            "🦆💛 Yellow duck supremacy! 💛🦆",
+            "🦆🌊 Floating into your messages... 🌊🦆",
+            "🦆✨ Magical debugging duck has arrived! ✨🦆",
+            "🦆🎵 *Quack quack* (that's duck for 'hello') 🎵🦆",
+            "🦆🔥 FIRE DUCK INCOMING! 🔥🦆",
+            "🦆🌈 Rainbow duck bringing good vibes! 🌈🦆"
+        ]
+        
+        # Pick a random duck message
+        duck_message = random.choice(duck_messages)
+        self.send_imessage(phone_number, duck_message)
+        return True
+    
+    def get_random_duck_image_url(self):
+        """Get a random duck image URL from various sources"""
         try:
-            # Collection of remote duck image URLs
+            # Collection of DIFFERENT duck images from reliable sources
             duck_urls = [
+                # Original debugging duck
                 "https://upload.wikimedia.org/wikipedia/commons/d/d5/Rubber_duck_assisting_with_debugging.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rubber_duck_assisting_with_debugging.jpg/800px-Rubber_duck_assisting_with_debugging.jpg",
-                "https://images.unsplash.com/photo-1563906267088-b029e7101114?w=400",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400",
-                "https://images.unsplash.com/photo-1563906267088-b029e7101114?ixlib=rb-4.0.3&w=400",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&w=400"
+                
+                # Different Wikipedia Commons duck images
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Rubber_duck_closeup.jpg/400px-Rubber_duck_closeup.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rubber_duck_floating.jpg/400px-Rubber_duck_floating.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Yellow_rubber_duck.jpg/400px-Yellow_rubber_duck.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Rubber_ducky_bathtub.jpg/400px-Rubber_ducky_bathtub.jpg",
+                
+                # Placeholder images with duck themes (these will definitely be different)
+                f"https://via.placeholder.com/400x400/FFD700/000000?text=DUCK+{random.randint(1, 999)}",
+                f"https://via.placeholder.com/400x400/FFA500/FFFFFF?text=QUACK+{random.randint(1, 999)}",
+                f"https://via.placeholder.com/400x400/FF6347/FFFFFF?text=RUBBER+DUCK+{random.randint(1, 999)}",
+                f"https://via.placeholder.com/400x400/32CD32/000000?text=🦆+{random.randint(1, 999)}",
+                f"https://via.placeholder.com/400x400/1E90FF/FFFFFF?text=SQUEAKY+{random.randint(1, 999)}"
             ]
             
-            # Pick random duck URL
-            duck_url = random.choice(duck_urls)
+            # Pick a random URL
+            selected_url = random.choice(duck_urls)
+            print(f"Selected duck URL: {selected_url}")
+            return selected_url
+            
+        except Exception as e:
+            print(f"Random duck URL generation failed: {e}")
+            
+        return None
+    
+    def send_remote_duck_image(self, phone_number: str):
+        """Send rubber duck image from various sources"""
+        try:
+            # Get a random duck image URL
+            duck_url = self.get_random_duck_image_url()
+            
+            # Fallback to reliable duck image if random generation failed
+            if not duck_url:
+                duck_url = "https://upload.wikimedia.org/wikipedia/commons/d/d5/Rubber_duck_assisting_with_debugging.jpg"
+            
+            print(f"Trying to download duck image from: {duck_url}")
+            
+            # Create request with headers to avoid blocking
+            req = urllib.request.Request(
+                duck_url,
+                headers={
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+                }
+            )
             
             # Download image to temporary file
             with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
+                with urllib.request.urlopen(req, timeout=15) as response:
+                    tmp_file.write(response.read())
+                
+                temp_path = tmp_file.name
+                print(f"Downloaded duck image to: {temp_path}")
+                
+                # Send image file via AppleScript
+                clean_phone = phone_number.replace("-", "").replace("(", "").replace(")", "").replace(" ", "")
+                
+                applescript = f'''
+                tell application "Messages"
+                    set targetService to 1st service whose service type = iMessage
+                    set targetBuddy to buddy "{clean_phone}" of targetService
+                    set imageFile to POSIX file "{temp_path}"
+                    send imageFile to targetBuddy
+                end tell
+                '''
+                
+                result = subprocess.run(['osascript', '-e', applescript],
+                                      capture_output=True, text=True, timeout=30)
+                
+                # Clean up temporary file
                 try:
-                    with urllib.request.urlopen(duck_url) as response:
-                        tmp_file.write(response.read())
+                    os.unlink(temp_path)
+                except:
+                    pass
+                
+                if result.returncode != 0:
+                    print(f"AppleScript error: {result.stderr}")
+                    # Fallback to random duck message
+                    return self.send_random_duck_message(phone_number)
                     
-                    temp_path = tmp_file.name
-                    
-                    # Send image file via AppleScript
-                    # Clean phone number
-                    clean_phone = phone_number.replace("-", "").replace("(", "").replace(")", "").replace(" ", "")
-                    
-                    applescript = f'''
-                    tell application "Messages"
-                        set targetService to 1st service whose service type = iMessage
-                        set targetBuddy to buddy "{clean_phone}" of targetService
-                        set imageFile to POSIX file "{temp_path}"
-                        send imageFile to targetBuddy
-                    end tell
-                    '''
-                    
-                    result = subprocess.run(['osascript', '-e', applescript],
-                                          capture_output=True, text=True)
-                    
-                    # Clean up temporary file
-                    try:
-                        os.unlink(temp_path)
-                    except:
-                        pass
-                    
-                    if result.returncode != 0:
-                        raise Exception(f"AppleScript error: {result.stderr}")
+                print("Duck image sent successfully!")
+                return True
                         
-                    return True
-                    
-                except Exception as download_error:
-                    # Clean up temp file if download failed
-                    try:
-                        os.unlink(temp_path)
-                    except:
-                        pass
-                    raise download_error
-            
         except Exception as e:
-            # Fallback to duck emoji if image sending fails
-            duck_emojis = "🦆🦆🦆 QUACK ATTACK! 🦆🦆🦆"
-            self.send_imessage(phone_number, duck_emojis)
-            return False
+            print(f"Duck image sending failed: {e}")
+            # Fallback to random duck message for variety
+            return self.send_random_duck_message(phone_number)
     
     def send_duck_image(self):
         """Send a random rubber duck image"""
@@ -452,17 +502,22 @@ class SpamResponseApp:
             messagebox.showwarning("Warning", "Please enter a phone number first!")
             return
         
+        # Update status to show we're trying
+        self.status_var.set("🦆 Deploying duck image...")
+        self.root.update()  # Force UI update
+        
         try:
             # Try to send remote duck image file
             success = self.send_remote_duck_image(phone)
             
             if success:
-                self.status_var.set(f"🦆 Duck image deployed to {phone}")
+                self.status_var.set(f"🦆 Duck image successfully deployed to {phone}!")
             else:
-                self.status_var.set(f"🦆 Duck emojis sent to {phone}")
+                self.status_var.set(f"🦆 Duck emojis sent to {phone} (image failed)")
             
         except Exception as e:
-            self.status_var.set("🦆 Duck delivery failed - try again!")
+            print(f"Duck sending error: {e}")
+            self.status_var.set("🦆 Duck delivery failed - check console for details")
     
     def test_applescript(self):
         """Test AppleScript functionality"""
